@@ -1,66 +1,265 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+# API Prueba Técnica  GDA
+_Servicio de API para el Registro de Clientes con información de sus Regiones y Comunas_
+# :page_facing_up:Guía de Instalación
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+### :information_source:Requerimientos previos
+- **PHP.**
+- **Composer.**
+- **Algún gestor de bases de datos (MySQL Workbench, phpMyAdmin, Tableplus, etc).**
+- **_Opcional:_ Postman o alguna otra herramienta para probar APIs**
 
-## About Laravel
+### :small_blue_diamond:Paso 1. Instalar las dependencias
+- Instalar las dependencias de la aplicación Laravel abriendo una terminal y ejecutando el comando ``` composer install ```
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+### :small_blue_diamond:Paso 2. Crear una base de datos
+- Crear una base de datos mediante el uso de cualquier herramienta de administración de bases de datos, como MySQL Workbench, phpMyAdmin, Tableplus, etc.
+- Renombar el archivo ```.env.example``` a ```.env```
+- Configurar los ajustes de conexión de la base de datos en el archivo ```.env```de la aplicación. Por ejemplo:
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+  ```
+    DB_CONNECTION=mysql
+    DB_HOST=127.0.0.1
+    DB_PORT=3306
+    DB_DATABASE=mydb
+    DB_USERNAME=root
+    DB_PASSWORD=mypassword
+    ```
+### :small_blue_diamond:Paso 3. Ejecutar la migración
+- Ejecutar la migración de la aplicación abriendo una terminal e ingresando el comando ``` php artisan migrate ```
+- Opcionalmente puede ejecutar el comando ``` php artisan db:seed ``` para proveer a la base de datos una serie de registros de prueba para las Regiones y Comunas.
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+### :small_blue_diamond:Paso 4. Ejecutar la aplicación
+- Es hora de ejecutar la aplicación, ingresar el comando ``` php artisan serve ``` en la terminal para iniciar el servicio de API
+- Una vez que el servicio esté en funcionamiento, puedes probarla utilizando herramientas como Postman.
 
-## Learning Laravel
+Por ejemplo, para obtener una lista de todas las regiones, puedes utilizar la siguiente solicitud HTTP:
+```
+   GET http://localhost:8000/api/regions
+```
+### :information_source:Configuración adicional
+- La aplicación almacena Logs de entrada y salida de información los cuales pueden ser consultados en el archivo ``` storage\logs\laravel.log ```. La aplicación puede ser configurada para almacenar únicamente los Logs de entrada realizando el siguiente cambio ``` LOG_LEVEL=info ``` en el archivo ``` .env ```
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+# Documentación
 
-You may also try the [Laravel Bootcamp](https://bootcamp.laravel.com), where you will be guided through building a modern Laravel application from scratch.
+## Métodos
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains over 2000 video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+| Método | Descripción |
+|---|---|
+| :green_circle:GET | Obtiene un recurso |
+| :large_blue_circle:POST | Crea un recurso |
+| :red_circle:DELETE | Elimina un recurso |
 
-## Laravel Sponsors
+# Rutas
+> [!IMPORTANT]
+> - Las rutas con autenticación de tipo "Auth" requieren de un Bearer Token que debe ser ingresado por medio de los headers de la solicitud.
+> - El body de la solicitud debe contener los parámetros de entrada requeridos por la ruta.
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the [Laravel Partners program](https://partners.laravel.com).
+## :diamond_shape_with_a_dot_inside:Usuarios
+| Ruta | Método | Descripción | Autenticación |
+|---|---|---|---|
+| /api/registro | :large_blue_circle:POST | Registra un nuevo usuario | Guest |
+| /api/login | :large_blue_circle:POST | Autentica un usuario | Guest |
+| /api/logout | :large_blue_circle:POST | Autentica un usuario | Auth |
 
-### Premium Partners
+#### :small_blue_diamond:Parámetros de entrada
 
-- **[Vehikl](https://vehikl.com/)**
-- **[Tighten Co.](https://tighten.co)**
-- **[WebReinvent](https://webreinvent.com/)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel/)**
-- **[Cyber-Duck](https://cyber-duck.co.uk)**
-- **[DevSquad](https://devsquad.com/hire-laravel-developers)**
-- **[Jump24](https://jump24.co.uk)**
-- **[Redberry](https://redberry.international/laravel/)**
-- **[Active Logic](https://activelogic.com)**
-- **[byte5](https://byte5.de)**
-- **[OP.GG](https://op.gg)**
+| Ruta | Método | Parámetro | Descripción |
+|---|---|---|---|
+| /api/registro| :large_blue_circle:POST | name | Nombre del usuario |
+||| email | Correo electrónico |
+||| password | Contraseña (Mínimo 8 caracteres) |
+||| password_confirmation | Confirmación de contraseña |
 
-## Contributing
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+| Ruta | Método | Parámetro | Descripción |
+|---|---|---|---|
+| /api/login| :large_blue_circle:POST | email | Correo electrónico |
+||| password | Contraseña |
 
-## Code of Conduct
+| Ruta | Método | Parámetro | Descripción |
+|---|---|---|---|
+| /api/logout| :large_blue_circle:POST | Bearer Token | Token de autenticación |
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+#### :small_blue_diamond:Parámetros de salida
 
-## Security Vulnerabilities
+| Ruta | Método | Parámetro | Descripción |
+|---|---|---|---|
+| /api/registro| :large_blue_circle:POST | token | Token de autenticación |
+||| user | Usuario autenticado |
+||| success | Solicitud completada (_true_), Error en pámetros (_false_) |
+||| errors | Lista de errores con los parámetros incorrectos. |
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+| Ruta | Método | Parámetro | Descripción |
+|---|---|---|---|
+| /api/login| :large_blue_circle:POST |token | Token de autenticación |
+||| user | Usuario autenticado |
+||| success | Solicitud completada (_true_), Error en pámetros (_false_) |
+||| errors | Lista de errores con los parámetros incorrectos. |
 
-## License
+| Ruta | Método | Parámetro | Descripción |
+|---|---|---|---|
+| /api/logout| :large_blue_circle:POST | message | Mensaje de confirmación ó Solicitud no autenticada |
+||| user | Usuario null |
+||| success | Solicitud completada (_true_) |
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+## :diamond_shape_with_a_dot_inside:Clientes
+| Ruta | Método | Descripción | Autenticación |
+|---|---|---|---|
+| /api/customers | :green_circle:GET | Muestra todos los clientes activos | Auth |
+| /api/customers | :large_blue_circle:POST | Registra un nuevo cliente | Auth |
+| /api/customers/{identifier} | :green_circle:GET | Muestra un cliente por su DNI o Email | Auth |
+| /api/customers/{identifier} | :red_circle:DELETE | Elimina un cliente por su DNI o Email | Auth |
+
+#### :small_blue_diamond:Parámetros de entrada
+
+| Ruta | Método | Parámetro | Descripción |
+|---|---|---|---|
+| /api/customers | :green_circle:GET | Bearer Token | Token de autenticación |
+
+| Ruta | Método | Parámetro | Descripción |
+|---|---|---|---|
+| /api/customers| :large_blue_circle:POST | Bearer Token | Token de autenticación |
+||| dni | DNI del cliente |
+||| email | Correo electrónico |
+||| name | Nombre del cliente |
+||| last_name | Apellido del cliente |
+||| address | Dirección del cliente |
+||| region_id | ID de la región |
+||| commune_id | ID de la comuna |
+
+| Ruta | Método | Parámetro | Descripción |
+|---|---|---|---|
+| /api/customers/{identifier}| :green_circle:GET / :red_circle:DELETE | Bearer Token | Token de autenticación |
+||| {identifier} | DNI o Email del cliente |
+
+#### :small_blue_diamond:Parámetros de salida
+
+| Ruta | Método | Parámetro | Descripción |
+|---|---|---|---|
+| /api/customers | :green_circle:GET | data | Lista de clientes activos |
+||| success | Solicitud completada (_true_) |
+||| message | Mensaje solicitud no autenticada |
+
+| Ruta | Método | Parámetro | Descripción |
+|---|---|---|---|
+| /api/customers | :large_blue_circle:POST | success | Solicitud completada (_true_), Error en pámetros (_false_) |
+||| errors | Lista de errores con los parámetros incorrectos. |
+||| message | Mensaje solicitud no autenticada |
+
+| Ruta | Método | Parámetro | Descripción |
+|---|---|---|---|
+| /api/customers/{identifier} | :green_circle:GET | customer | Información del cliente encontrado |
+||| success | Solicitud completada (_true_), Error en pámetros (_false_) |
+||| errors | Lista de errores con los parámetros incorrectos. |
+||| message | Mensaje solicitud no autenticada |
+
+| Ruta | Método | Parámetro | Descripción |
+|---|---|---|---|
+| /api/customers/{identifier} | :red_circle:DELETE | success | Solicitud completada (_true_), Registro no existente (_false_) |
+||| errors | Lista de errores |
+||| message | Mensaje de Registro eliminado ó Solicitud no autenticada |
+
+## :diamond_shape_with_a_dot_inside:Regiones
+| Ruta | Método | Descripción | Autenticación |
+|---|---|---|---|
+| /api/regions | :green_circle:GET | Muestra todos las Regiones activas | Auth |
+| /api/regions | :large_blue_circle:POST | Registra una nueva Región | Auth |
+| /api/regions/{identifier} | :red_circle:DELETE | Elimina una Región por su ID | Auth |
+
+#### :small_blue_diamond:Parámetros de entrada
+
+| Ruta | Método | Parámetro | Descripción |
+|---|---|---|---|
+| /api/regions | :green_circle:GET | Bearer Token | Token de autenticación |
+
+| Ruta | Método | Parámetro | Descripción |
+|---|---|---|---|
+| /api/regions | :large_blue_circle:POST | Bearer Token | Token de autenticación |
+||| description | Descripción de la Región |
+
+| Ruta | Método | Parámetro | Descripción |
+|---|---|---|---|
+| /api/regions/{identifier} | :red_circle:DELETE | Bearer Token | Token de autenticación |
+||| {identifier} | ID de la Región |
+
+#### :small_blue_diamond:Parámetros de salida
+
+| Ruta | Método | Parámetro | Descripción |
+|---|---|---|---|
+| /api/regions | :green_circle:GET | data | Lista de regiones activas |
+||| success | Solicitud completada (_true_) |
+||| message | Mensaje solicitud no autenticada |
+
+| Ruta | Método | Parámetro | Descripción |
+|---|---|---|---|
+| /api/regions | :large_blue_circle:POST | success | Solicitud completada (_true_), Error en pámetros (_false_) |
+||| errors | Lista de errores con los parámetros incorrectos. |
+||| message | Mensaje solicitud no autenticada |
+
+| Ruta | Método | Parámetro | Descripción |
+|---|---|---|---|
+| /api/regions/{identifier} | :red_circle:DELETE | success | Solicitud completada (_true_), Registro no existente (_false_) |
+||| errors | Lista de errores |
+||| message | Mensaje de Registro eliminado ó Solicitud no autenticada |
+
+## :diamond_shape_with_a_dot_inside:Comunas
+| Ruta | Método | Descripción | Autenticación |
+|---|---|---|---|
+| /api/communes | :green_circle:GET | Muestra todos las Comunas activas | Auth |
+| /api/communes | :large_blue_circle:POST | Registra una nueva Comuna | Auth |
+| /api/communes/{identifier} | :red_circle:DELETE | Elimina una Comuna por su ID | Auth |
+
+#### :small_blue_diamond:Parámetros de entrada
+
+| Ruta | Método | Parámetro | Descripción |
+|---|---|---|---|
+| /api/communes | :green_circle:GET | Bearer Token | Token de autenticación |
+
+| Ruta | Método | Parámetro | Descripción |
+|---|---|---|---|
+| /api/communes | :large_blue_circle:POST | Bearer Token | Token de autenticación |
+||| region_id | ID de Región al que pertenece la Comuna |
+||| description | Descripción de la Comuna |
+
+| Ruta | Método | Parámetro | Descripción |
+|---|---|---|---|
+| /api/communes/{identifier} | :red_circle:DELETE | Bearer Token | Token de autenticación |
+||| {identifier} | ID de la Comuna |
+
+#### :small_blue_diamond:Parámetros de salida
+
+| Ruta | Método | Parámetro | Descripción |
+|---|---|---|---|
+| /api/communes | :green_circle:GET | data | Lista de Comunas activas |
+||| success | Solicitud completada (_true_) |
+||| message | Mensaje solicitud no autenticada |
+
+| Ruta | Método | Parámetro | Descripción |
+|---|---|---|---|
+| /api/communes | :large_blue_circle:POST | success | Solicitud completada (_true_), Error en pámetros (_false_) |
+||| errors | Lista de errores con los parámetros incorrectos. |
+||| message | Mensaje solicitud no autenticada |
+
+| Ruta | Método | Parámetro | Descripción |
+|---|---|---|---|
+| /api/communes/{identifier} | :red_circle:DELETE | success | Solicitud completada (_true_), Registro no existente (_false_) |
+||| errors | Lista de errores |
+||| message | Mensaje de Registro eliminado ó Solicitud no autenticada |
+
+# Ejemplo
+- Para registrar un nuevo cliente debemos enviar una solicitud de método ``` POST ``` a la ruta ``` /api/customers ``` y construimos la consulta con los parámetros de entrada requeridos por el servicio de la siguiente forma.
+```
+headers: {
+    Authorization: `Bearer PU100RI9gv9179uId0QFkmkU5TVMdsUq0KK1S3yX7c1e4bd1`,
+},
+body:{
+    "dni": "52930150",
+    "email": "jose@email.com",
+    "name": "Jose",
+    "last_name": "Pérez",
+    "address": "Calle 32 #09",
+    "region_id": "1",
+    "commune_id": "2",
+}
+```
+donde ```headers``` contiene la información del token de autenticación el cuál lo provee el servicio de autenticación de usuarios a través de las rutas ``` /api/registro ``` y ``` /api/login ```; y ``` body ``` contiene los parámetros requerios por el servicio para ingresar la información a la base de datos.
