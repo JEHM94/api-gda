@@ -1,5 +1,35 @@
 # API Prueba Técnica  GDA
 
+# Guía de Instalación
+
+### :small_blue_diamond:Paso 1. Instalar las dependencias
+- Instalar las dependencias de la aplicación Laravel abriendo una terminal y ejecutando el comando ``` composer install ```
+
+### :small_blue_diamond:Paso 2. Crear una base de datos
+- Crear una base de datos mediante el uso de cualquier herramienta de administración de bases de datos, como MySQL Workbench, phpMyAdmin o Tableplus.
+- Configurar los ajustes de conexión de la base de datos en el archivo ```.env```de la aplicación. Por ejemplo:
+
+  ```
+    DB_CONNECTION=mysql
+    DB_HOST=127.0.0.1
+    DB_PORT=3306
+    DB_DATABASE=mydb
+    DB_USERNAME=root
+    DB_PASSWORD=mypassword
+    ```
+### :small_blue_diamond:Paso 3. Ejecutar la migración
+- Ejecutar la migración de la aplicación abriendo una terminal e ingresando el comando ``` php artisan migrate ```
+- Opcionalmente puede ejecutar el comando ``` php artisan db:seed ``` para proveer a la base de datos una serie de registros de prueba para las Regiones y Comunas
+
+### :small_blue_diamond:Paso 4. Ejecutar la aplicación
+- Es hora de ejecutar la aplicación, ingresar el comando ``` php artisan serve ``` en la terminal para iniciar el servicio de API
+- Una vez que el servicio esté en funcionamiento, puedes probarla utilizando herramientas como Postman.
+
+Por ejemplo, para obtener una lista de todas las regiones, puedes utilizar la siguiente solicitud HTTP:
+```
+   GET http://localhost:8000/api/regions
+```
+
 # Documentación
 
 ## Métodos
@@ -11,14 +41,18 @@
 | DELETE | Elimina un recurso |
 
 # Rutas
-## Usuarios
+> [!IMPORTANT]
+> - Las rutas con autenticación de tipo "Auth" requieren de un Bearer Token que debe ser ingresado por medio de los headers de la solicitud.
+> - El body de la solicitud debe contener los parámetros de entrada requeridos por el endpoint.
+
+## :arrow_right:Usuarios
 | Ruta | Método | Descripción | Autenticación |
 |---|---|---|---|
 | /api/registro | POST | Registra un nuevo usuario | Guest |
 | /api/login | POST | Autentica un usuario | Guest |
 | /api/logout | POST | Autentica un usuario | Auth |
 
-#### Parámetros de entrada
+#### :small_blue_diamond:Parámetros de entrada
 
 | Ruta | Parámetro | Descripción |
 |---|---|---|
@@ -37,7 +71,7 @@
 |---|---|---|
 | /api/logout| Bearer Token | Token de autenticación |
 
-#### Parámetros de salida
+#### :small_blue_diamond:Parámetros de salida
 
 | Ruta | Parámetro | Descripción |
 |---|---|---|
@@ -59,7 +93,7 @@
 || user | Usuario null |
 || success | Solicitud completada (_true_) |
 
-## Clientes
+## :arrow_right:Clientes
 | Ruta | Método | Descripción | Autenticación |
 |---|---|---|---|
 | /api/customers | GET | Muestra todos los clientes activos | Auth |
@@ -67,7 +101,7 @@
 | /api/customers/{identifier} | GET | Muestra un cliente por su DNI o Email | Auth |
 | /api/customers/{identifier} | DELETE | Elimina un cliente por su DNI o Email | Auth |
 
-#### Parámetros de entrada
+#### :small_blue_diamond:Parámetros de entrada
 
 | Ruta | Método | Parámetro | Descripción |
 |---|---|---|---|
@@ -89,7 +123,7 @@
 | /api/customers/{identifier}| GET / DELETE | Bearer Token | Token de autenticación |
 ||| {identifier} | DNI o Email del cliente |
 
-#### Parámetros de salida
+#### :small_blue_diamond:Parámetros de salida
 
 | Ruta | Método | Parámetro | Descripción |
 |---|---|---|---|
@@ -116,14 +150,14 @@
 ||| errors | Lista de errores |
 ||| message | Mensaje de Registro eliminado ó Solicitud no autenticada |
 
-## Regiones
+## :arrow_right:Regiones
 | Ruta | Método | Descripción | Autenticación |
 |---|---|---|---|
 | /api/regions | GET | Muestra todos las Regiones activas | Auth |
 | /api/regions | POST | Registra una nueva Región | Auth |
 | /api/regions/{identifier} | DELETE | Elimina una Región por su ID | Auth |
 
-#### Parámetros de entrada
+#### :small_blue_diamond:Parámetros de entrada
 
 | Ruta | Método | Parámetro | Descripción |
 |---|---|---|---|
@@ -139,7 +173,7 @@
 | /api/regions/{identifier} | DELETE | Bearer Token | Token de autenticación |
 ||| {identifier} | ID de la Región |
 
-#### Parámetros de salida
+#### :small_blue_diamond:Parámetros de salida
 
 | Ruta | Método | Parámetro | Descripción |
 |---|---|---|---|
@@ -159,14 +193,14 @@
 ||| errors | Lista de errores |
 ||| message | Mensaje de Registro eliminado ó Solicitud no autenticada |
 
-## Comunas
+## :arrow_right:Comunas
 | Ruta | Método | Descripción | Autenticación |
 |---|---|---|---|
 | /api/communes | GET | Muestra todos las Comunas activas | Auth |
 | /api/communes | POST | Registra una nueva Comuna | Auth |
 | /api/communes/{identifier} | DELETE | Elimina una Comuna por su ID | Auth |
 
-#### Parámetros de entrada
+#### :small_blue_diamond:Parámetros de entrada
 
 | Ruta | Método | Parámetro | Descripción |
 |---|---|---|---|
@@ -183,7 +217,7 @@
 | /api/communes/{identifier} | DELETE | Bearer Token | Token de autenticación |
 ||| {identifier} | ID de la Comuna |
 
-#### Parámetros de salida
+#### :small_blue_diamond:Parámetros de salida
 
 | Ruta | Método | Parámetro | Descripción |
 |---|---|---|---|
