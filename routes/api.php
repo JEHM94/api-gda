@@ -1,5 +1,9 @@
 <?php
 
+use App\Http\Controllers\AuthController;
+use App\Http\Controllers\CommuneController;
+use App\Http\Controllers\CustomerController;
+use App\Http\Controllers\RegionsController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -14,6 +18,21 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
-    return $request->user();
+// Auth Routes
+Route::middleware('auth:sanctum')->group(function () {
+    Route::get('/user', function (Request $request) {
+        return $request->user();
+    });
+
+    Route::apiResource('/regions', RegionsController::class);
+
+    Route::apiResource('/communes', CommuneController::class);
+
+    Route::apiResource('/customers', CustomerController::class);
+    
+    Route::post('/logout', [AuthController::class, 'logout']);
 });
+
+// Guest Routes
+Route::post('/registro', [AuthController::class, 'register']);
+Route::post('/login', [AuthController::class, 'login']);
